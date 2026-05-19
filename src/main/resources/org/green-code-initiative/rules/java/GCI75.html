@@ -1,0 +1,11 @@
+<p>Databases are typically essential application components. As many queries are used to retrieve and store data, they end up having a significant impact on the solution's resource use when executed frequently.</p>
+<p>Use LIMIT on SQL requests to control the size of data exchange. When possible, using the 'LIMIT' clause reduces the amount of transferred data. Performance gains will be even more significant if records contain a large number of voluminous fields.</p>
+<h2>Noncompliant Code Example</h2>
+<pre>
+String sql = "SELECT user FROM myTable";
+</pre>
+<h2>Compliant Solution</h2>
+<pre>
+String sql = "SELECT user FROM myTable LIMIT 50";
+</pre>
+

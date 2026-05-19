@@ -1,0 +1,31 @@
+<div class="paragraph">
+<p>Database servers have to resolve schema fields when using asterisk symbol (<code>*</code>). Knowing and using the schema saves CPU cycles and network transfer.</p>
+</div>
+<div class="sect1">
+<h2 id="_non_compliant_code_example">Non compliant Code Example</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> foo() {
+    <span style="color:#777">// ...</span>
+    <span style="color:#0a8;font-weight:bold">String</span> baseQuery = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">SELECT * FROM users</span><span style="color:#710">&quot;</span></span>; <span style="color:#777">// Noncompliant</span>
+    <span style="color:#777">// ...</span>
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_compliant_solution">Compliant Solution</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> foo() {
+    <span style="color:#777">// ...</span>
+    <span style="color:#0a8;font-weight:bold">String</span> query = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">SELECT id, name, address FROM users</span><span style="color:#710">&quot;</span></span>;
+    <span style="color:#777">// ...</span>
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
