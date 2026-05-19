@@ -32,11 +32,35 @@ public class MakeNonReassignedVariablesConstants extends IssuableSubscriptionVis
             LOGGER.debug("   => isNotReassigned = {}", isNotReassigned(variableTree));
             LOGGER.debug("   => isPassedAsNonFinalParameter = {}", isPassedAsNonFinalParameter(variableTree));
         }
+        if (isAbstractInterfaceMethodParameter(variableTree)) {
+            super.visitNode(tree);
+            return;
+        }
         if (isNotFinalAndNotStatic(variableTree) && isNotReassigned(variableTree)) {
             reportIssue(tree, MESSAGE_RULE);
         } else {
             super.visitNode(tree);
         }
+    }
+
+    /**
+     * Checks if the variable is a parameter of an abstract interface method.
+     * Abstract interface methods have no body, so their parameters cannot be reassigned.
+     * Only default or static methods in interfaces should trigger this rule.
+     */
+    private static boolean isAbstractInterfaceMethodParameter(VariableTree variableTree) {
+        Tree parent = variableTree.parent();
+        if (parent == null || !parent.is(Kind.METHOD)) {
+            return false;
+        }
+        MethodTree methodTree = (MethodTree) parent;
+        Tree grandParent = methodTree.parent();
+        if (grandParent == null || !grandParent.is(Kind.INTERFACE)) {
+            return false;
+        }
+        // In an interface, only default and static methods have a body
+        // Abstract methods (no body) should not trigger the rule
+        return !hasAnyOf(methodTree.modifiers(), Modifier.DEFAULT, Modifier.STATIC);
     }
 
     private static boolean isNotReassigned(VariableTree variableTree) {
