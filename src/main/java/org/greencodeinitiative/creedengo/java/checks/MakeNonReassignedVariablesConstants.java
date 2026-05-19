@@ -33,6 +33,7 @@ public class MakeNonReassignedVariablesConstants extends IssuableSubscriptionVis
             LOGGER.debug("   => isPassedAsNonFinalParameter = {}", isPassedAsNonFinalParameter(variableTree));
         }
         if (isNotFinalAndNotStatic(variableTree) && isNotReassigned(variableTree)) {
+         //TODO
             reportIssue(tree, MESSAGE_RULE);
         } else {
             super.visitNode(tree);
