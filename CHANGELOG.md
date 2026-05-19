@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- [#122](https://github.com/green-code-initiative/creedengo-java/issues/122) Fix GCI82: final keyword in instanceof pattern matching is now correctly recognized
+- [#121](https://github.com/green-code-initiative/creedengo-java/issues/121) Fix GCI82: rule no longer triggers on abstract interface method parameters (only default/static methods are checked)
 - [#69](https://github.com/green-code-initiative/creedengo-java/issues/69) correction of NullPointer in GCI79 rule + technical refactoring of GCI79
 - update integration tests system to use the new component "creedengo-integration-test"
 - compatibility updates for SonarQube up to 26.2.0

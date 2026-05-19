@@ -147,3 +147,44 @@ class notReassignedInConstructorNotFinal{
         System.out.println(notReassignedInConstructorNotFinal);
     }
 }
+
+// Fix #121: Interface method parameters should NOT trigger the rule
+interface MyInterface {
+    // Abstract method parameters - Compliant (no body, cannot be reassigned)
+    void abstractMethod(String param1, int param2);
+
+    // Default method parameters - should still be checked
+    default void defaultMethod(String param) { // Noncompliant {{The variable is never reassigned and can be 'final'}}
+        System.out.println(param);
+    }
+
+    // Default method with reassigned parameter - Compliant
+    default void defaultMethodReassigned(String param) {
+        param = "reassigned";
+        System.out.println(param);
+    }
+
+    // Static method parameters - should still be checked
+    static void staticMethod(String param) { // Noncompliant {{The variable is never reassigned and can be 'final'}}
+        System.out.println(param);
+    }
+}
+
+// Fix #122: instanceof pattern with final keyword should NOT trigger the rule
+class InstanceOfPatternTest {
+    private String key = "test"; // Noncompliant {{The variable is never reassigned and can be 'final'}}
+
+    public boolean equalsWithFinalPattern(Object o) { // Noncompliant {{The variable is never reassigned and can be 'final'}}
+        if (o instanceof final String k) { // Compliant - already final via instanceof pattern
+            return key.equals(k);
+        }
+        return false;
+    }
+
+    public boolean equalsWithoutFinalPattern(Object o) { // Noncompliant {{The variable is never reassigned and can be 'final'}}
+        if (o instanceof String k) { // Noncompliant {{The variable is never reassigned and can be 'final'}}
+            return key.equals(k);
+        }
+        return false;
+    }
+}
